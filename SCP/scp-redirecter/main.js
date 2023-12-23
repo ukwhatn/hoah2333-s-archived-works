@@ -17,7 +17,7 @@ $(document).ready(function () {
     function replace(arguments) {
         if (/=/g.test(arguments)) {
             var args = arguments.split("&");
-            var name, site;
+            var name, site, scheme;
             for (i = 0; i < args.length; i++) {
                 if (/name=[A-Za-z0-9\-]+/g.test(args[i])) {
                     name = args[i].slice(args[i].search(/=[A-Za-z0-9\-]+/g) + 1);
@@ -25,13 +25,20 @@ $(document).ready(function () {
                 if (/site=[A-Za-z0-9\-]+/g.test(args[i])) {
                     site = args[i].slice(args[i].search(/=[A-Za-z0-9\-]+/g) + 1);
                 }
+                if (/scheme=[A-Za-z0-9\-]+/g.test(args[i])) {
+                    scheme = args[i].slice(args[i].search(/=[A-Za-z0-9\-]+/g) + 1);
+                }
             }
             console.log("name = "+ name);
             console.log("site = "+ site);
+            console.log("scheme = "+ scheme);
             if (site == undefined) {
                 site = "scp-wiki-cn";
             }
-            link = "https://" + site + ".wikidot.com/" + name;
+            if (scheme == undefined) {
+                scheme = "https";
+            }
+            link = scheme + "://" + site + ".wikidot.com/" + name;
         } else {
             link = "https://scp-wiki-cn.wikidot.com/" + arguments;
         }
